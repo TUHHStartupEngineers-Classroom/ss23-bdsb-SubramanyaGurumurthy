@@ -8,6 +8,9 @@ author: "Joschka Schwarz"
 
 This is a template example for lab journaling. Students in the data science courses at the Institute of Entrepreneurship will use this template to learn R for business analytics. Students can replace this text as they wish.
 
+Hi this is Subramanya Nanjangud Gurumurthy. I am part of the course Business Data Science Basics. 
+My Matriculation Number is 54843
+
 ## How to use
 
 1. Accept the assignment and get your own github repo.
