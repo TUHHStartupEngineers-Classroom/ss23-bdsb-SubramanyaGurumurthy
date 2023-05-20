@@ -1,8 +1,194 @@
 ---
 title: "Data Visualization"
-author: "Joschka Schwarz"
+author: "Subramanya Nanjangud Gurumurthy"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+
+Data visualization in R involves creating visual representations of data to explore patterns, relationships, and trends. R provides several packages and libraries that offer a wide range of tools for data visualization, 
+including base R graphics, ggplot2, lattice, and plotly.
+
+Here are some key points about data visualization in R:
+
+* Base R Graphics: R's base graphics system provides a simple and versatile way to create plots using functions like plot(), hist(), boxplot(), and more. It offers a good starting point for basic visualizations and allows for customization of plot elements.
+
+* ggplot2: ggplot2 is a popular package for creating publication-quality graphics. It follows the grammar of graphics framework, where you build plots by adding layers and mappings to data. The package provides a consistent and flexible approach to creating visualizations with a wide range of plot types and customization options.
+
+* Lattice: Lattice is another powerful package for creating conditioned plots, which are plots that show relationships between variables conditioned on one or more variables. It offers functions like xyplot(), bwplot(), and levelplot() for creating trellis plots, which are useful for visualizing multivariate data.
+
+* Plotly: Plotly is an interactive data visualization library that allows you to create interactive and web-based plots in R. It provides functions like plot_ly() and ggplotly() for creating interactive plots, including scatter plots, bar charts, heatmaps, and more. Plotly visualizations can be easily embedded in web pages or viewed in a web browser.
+
+* Customization: R provides extensive options for customizing visualizations. You can adjust plot colors, add titles, labels, legends, and annotations, control axis scales and limits, change plot themes, and more. This flexibility allows you to tailor your visualizations to effectively communicate your data.
+
+* Data Transformation: Before visualizing data, you may need to transform and prepare it. R offers powerful data manipulation libraries like dplyr and tidyr, which enable you to reshape, filter, aggregate, and summarize data to create meaningful visualizations.
+
+* Exporting Plots: R allows you to save your plots in various formats, including PNG, PDF, SVG, and more. You can use functions like ggsave() or pdf() to export your plots for use in reports, presentations, or further analysis.
+
+
+# Challenges: 
+
+The challenge deals again with covid data. This time we are using a different up to date data set. I recommend to use the tidyverse to wrangle the data…
+
+```
+library(tidyverse)
+covid_data_tbl <- read_csv(""https://covid.ourworldindata.org/data/owid-covid-data.csv"")
+```
+
+## Challenge 1:
+
+Goal: Map the time course of the cumulative Covid-19 cases! Your plot should look like this:
+
+![Challenge 1](../../plots/Task_4/Challenge1)
+
+
+
+Adding the cases for Europe is optional. You can choose your own color theme, but don’t use the default one. Don’t forget to scale the axis properly. 
+The labels can be added with geom_label() or with geom_label_repel() (from the package ggrepel).
+
+### Solution:
+
+```{r} 
+##############################################################################################
+#1st task
+##############################################################################################
+
+library(tidyverse)
+library(lubridate)
+
+# Read the data from the CSV file
+data <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+
+# Filter data for the selected countries in Europe and the United States
+countries <- c("Germany", "United Kingdom", "France", "Spain", "United States")
+filtered_data <- data %>%
+  dplyr::filter(location %in% countries)
+
+filetered_conti <- data %>%
+  dplyr::filter(location %in% c("Europe"))
+
+# Convert date column to date format
+filtered_data$date <- ymd(filtered_data$date)
+filetered_conti$date <- ymd(filetered_conti$date)
+
+# Calculate the cumulative cases
+filtered_data <- filtered_data %>%
+  group_by(date, location) %>%
+  summarize(cumulative_cases = sum(total_cases, na.rm = TRUE)) %>%
+  ungroup()
+
+filetered_conti <- filetered_conti %>%
+  group_by(date) %>%
+  summarize(cumulative_cases = sum(total_cases, na.rm = TRUE),
+            location = "Europe") %>%
+  ungroup()
+
+filtered_data <- bind_rows(filtered_data, filetered_conti)
+
+
+# Convert total cases to millions
+filtered_data$cumulative_cases <- filtered_data$cumulative_cases / 1e6
+
+# Filter data until May 2022
+filtered_data <- filtered_data %>%
+  dplyr::filter(date <= ymd("2022-05-01"))
+
+# Find the highest values of cases for Europe and the United States
+highest_cases <- filtered_data %>%
+  dplyr::filter(location %in% c("Europe", "United States")) %>%
+  group_by(location) %>%
+  dplyr::filter(cumulative_cases == max(cumulative_cases)) %>%
+  ungroup()
+
+# Plot the cumulative cases
+ggplot(filtered_data, aes(x = date, y = cumulative_cases, color = location)) +
+  geom_line() +
+  geom_text(data = highest_cases, aes(label = round(cumulative_cases, 2), x = date, y = cumulative_cases),
+            color = "black", vjust = -0.5, size = 3) +
+  labs(x = "Timeline in Months", y = "Cumulative Cases (Millions)", title = "Covid-19 confirmed cases worldwide",
+       subtitle = "Until 06-2022") +
+  scale_x_date(date_labels = "%b %Y", date_breaks = "1 month") +
+  scale_y_continuous(labels = function(x) paste0(x, "M")) +
+  scale_color_manual(values = c("Germany" = "blue", "United Kingdom" = "red",
+                                "France" = "green", "Spain" = "orange",
+                                "United States" = "purple", "Europe" = "cyan")) +
+  theme_dark() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+
+
+## Challenge 2:
+
+Goal: Visualize the distribution of the mortality rate (deaths / population) with geom_map() (alternatively, you can plot the case-fatality rate (deaths / cases)). 
+The necessary longitudinal and lateral data can be accessed with this function:
+
+```
+world <- map_data("world")
+```
+
+This data has also to be put in the map argument of geom_map():
+
+```
+plot_data %>% ggplot( ... ) +
+  geom_map(aes(map_id = ..., ... ), map = world, ... ) +
+  ...
+
+```
+
+![Challenge 1](../../plots/Task_4/Challenge2)
+
+
+### Solution:
+
+
+```{r} 
+##############################################################################################
+#2nd task
+##############################################################################################
+library(tidyverse)
+library(scales)
+
+# Read the data from the CSV file
+data <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
+
+# Convert date column to date format
+data$date <- as.Date(data$date)
+
+# Filter data for the latest date
+latest_data <- data %>%
+  filter(date == max(date))
+
+# Calculate mortality rate
+latest_data <- latest_data %>%
+  mutate(mortality_rate = total_deaths / population) %>%
+  select(location, mortality_rate) %>%
+  mutate(location = case_when(
+    
+    location == "United Kingdom" ~ "UK",
+    location == "United States" ~ "USA",
+    location == "Democratic Republic of Congo" ~ "Democratic Republic of the Congo",
+    TRUE ~ location
+    
+  )) %>%
+  distinct()
+
+world <- map_data("world")
+# Perform the left join
+world <- left_join(world, latest_data, by = c("region" = "location"))
+
+ggplot(world) +
+  geom_map(aes(map_id = region, fill= mortality_rate), map = world) +
+  expand_limits(x = world$long, y = world$lat) +
+  coord_map()+
+  scale_fill_continuous(labels = percent_format(), name = "Mortality Rate")+
+  labs(title="Confirmed Covid-19 deaths relative to the size of the Population",
+       subtitle = "Around 6.2 Million confirmed COVID-19 deaths worldwide")
+
+```
+
+
+### Result from the local computer:
+
+I could not find the reason why the world map produced while rendering qmd page is grayscale. But in the local computer, I was able to get the actual plot in color, which can be seen here:
+
+
+![Confirmed Covid deaths Related to Population in World Map](../../plots/Task_4/Confirmed_covid_deaths_in_World_map)

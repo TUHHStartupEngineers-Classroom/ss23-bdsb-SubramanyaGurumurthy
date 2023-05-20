@@ -189,12 +189,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
    
   <ul class="collapse">
 <li>
-<a href="#source-code" id="toc-source-code" class="nav-link active" data-scroll-target="#source-code"><span class="toc-section-number">1</span>  Source Code</a>
+<a href="#challenges" id="toc-challenges" class="nav-link active" data-scroll-target="#challenges"><span class="toc-section-number">1</span>  Challenges:</a>
   <ul class="collapse">
-<li><a href="#explanation-on-how-to-solve" id="toc-explanation-on-how-to-solve" class="nav-link" data-scroll-target="#explanation-on-how-to-solve"><span class="toc-section-number">1.1</span>  Explanation On how to solve:</a></li>
+<li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution"><span class="toc-section-number">1.1</span>  Solution:</a></li>
+  <li><a href="#result-plots" id="toc-result-plots" class="nav-link" data-scroll-target="#result-plots"><span class="toc-section-number">1.2</span>  Result Plots:</a></li>
   </ul>
 </li>
-  <li><a href="#result-plots" id="toc-result-plots" class="nav-link" data-scroll-target="#result-plots"><span class="toc-section-number">2</span>  Result Plots:</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -219,224 +219,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   
 
 </header><p>Tidyverse is a collection of R packages designed to make data manipulation, visualization, and analysis easier and more consistent. It provides a set of tools and functions that follow a consistent grammar and syntax, making it easier to work with data in a tidy and organized manner.</p>
-<section id="source-code" class="level1" data-number="1"><h1 data-number="1">
-<span class="header-section-number">1</span> Source Code</h1>
-<p>The code from task explanation which is needed to solve the 1st challenge is:</p>
-<div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you are running the code, please change the file paths according to your working environment as absolute paths have been used</p>
-</div>
-</div>
-<pre><code><a href="https://tidyverse.tidyverse.org"># Data Science at TUHH ------------------------------------------------------
-# SALES ANALYSIS ----
-
-# 1.0 Load libraries ----
-library(tidyverse)
-library(readxl)
-library(conflicted)
-library(tibble)    #--&gt; is a modern re-imagining of the data frame
-library(readr)     #--&gt; provides a fast and friendly way to read rectangular data like csv
-library(dplyr)     #--&gt; provides a grammar of data manipulation
-library(magrittr)  #--&gt; offers a set of operators which make your code more readable (pipe operator)
-library(tidyr)     #--&gt; provides a set of functions that help you get to tidy data
-library(stringr)   #--&gt; provides a cohesive set of functions designed to make working with strings as easy as possible
-library(ggplot2)   #--&gt; graphics
-
-conflicts_prefer(magrittr::set_names)
-
-
-# 2.0 Importing Files ----
-bikes_tbl &lt;- read_excel("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/01_raw_data/bikes.xlsx")
-
-orderlines_tbl &lt;- read_excel("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/01_raw_data/orderlines.xlsx")
-
-# Not necessary for this analysis, but for the sake of completeness
-bikeshops_tbl  &lt;- read_excel("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/01_raw_data/bikeshops.xlsx")
-
-# 3.0 Examining Data ----
-
-orderlines_tbl
-glimpse(orderlines_tbl)
-
-# 4.0 Joining Data ----
-
-left_join(orderlines_tbl, bikes_tbl, by = c("product.id" = "bike.id"))
-
-bike_orderlines_joined_tbl &lt;- orderlines_tbl %&gt;%
-  left_join(bikes_tbl, by = c("product.id" = "bike.id")) %&gt;%
-  left_join(bikeshops_tbl, by = c("customer.id" = "bikeshop.id"))
-
-bike_orderlines_joined_tbl %&gt;% glimpse()
-
-# 5.0 Wrangling Data ----
-bike_orderlines_wrangled_tbl &lt;- bike_orderlines_joined_tbl %&gt;%
-  # 5.1 Separate category name
-  separate(col    = category,
-           into   = c("category.1", "category.2", "category.3"),
-           sep    = " - ") %&gt;%
-  # 5.2 Add the total price (price * quantity) 
-  # Add a column to a tibble that uses a formula-style calculation of other columns
-  mutate(total.price = price * quantity) %&gt;%
-  
-  # 5.3 Optional: Reorganize. Using select to grab or remove unnecessary columns
-  # 5.3.1 by exact column name
-  select(-...1, -gender) %&gt;%
-  
-  # 5.3.2 by a pattern
-  # You can use the select_helpers to define patterns. 
-  # Type ?ends_with and click on Select helpers in the documentation
-  select(-ends_with(".id")) %&gt;%
-  
-  # 5.3.3 Actually we need the column "order.id". Let's bind it back to the data
-  bind_cols(bike_orderlines_joined_tbl %&gt;% select(order.id)) %&gt;% 
-  
-  # 5.3.4 You can reorder the data by selecting the columns in your desired order.
-  # You can use select_helpers like contains() or everything()
-  select(order.id, contains("order"), contains("model"), contains("category"),
-         price, quantity, total.price,
-         everything()) %&gt;%
-  
-  # 5.4 Rename columns because we actually wanted underscores instead of the dots
-  # (one at the time vs. multiple at once)
-  rename(bikeshop = name) %&gt;%
-  set_names(names(.) %&gt;% str_replace_all("\\.", "_"))
-  
-  
-# 6.0 Business Insights ----
-# 6.1 Sales by Year ----
-
-library(lubridate)
-# Step 1 - Manipulate
-sales_by_year_tbl &lt;- bike_orderlines_wrangled_tbl %&gt;%
-  
-  # Select columns
-  select(order_date, total_price) %&gt;%
-  
-  # Add year column
-  mutate(year = year(order_date)) %&gt;%
-  
-  # Grouping by year and summarizing sales
-  group_by(year) %&gt;% 
-  summarize(sales = sum(total_price)) %&gt;%
-  
-  # Optional: Add a column that turns the numbers into a currency format 
-  # (makes it in the plot optically more appealing)
-  # mutate(sales_text = scales::dollar(sales)) &lt;- Works for dollar values
-  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
-                                     decimal.mark = ",", 
-                                     prefix = "", 
-                                     suffix = " €"))
-sales_by_year_tbl
-
-# Step 1 - Manipulate
-
-# Step 2 - Visualize
-
-# Step 2 - Visualize
-sales_by_year_tbl %&gt;%
-
-  # Setup canvas with the columns year (x-axis) and sales (y-axis)
-  ggplot(aes(x = year, y = sales)) +
-  
-  
-  # Geometries
-  geom_col(fill = "#2DC6D6") + # Use geom_col for a bar plot
-  geom_label(aes(label = sales_text)) + # Adding labels to the bars
-  geom_smooth(method = "lm", se = FALSE) + # Adding a trendline
-  
-  # Formatting
-  # scale_y_continuous(labels = scales::dollar) + # Change the y-axis. 
-  # Again, we have to adjust it for euro values
-  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
-                                                    decimal.mark = ",", 
-                                                    prefix = "", 
-                                                    suffix = " €")) +
-  labs(
-    title    = "Revenue by year",
-    subtitle = "Upward Trend",
-    x = "", # Override defaults for x and y
-    y = "Revenue"
-  )
-
-# 6.2 Sales by Year and Category 2 ----
-
-# Step 1 - Manipulate
-
-sales_by_year_cat_1_tbl &lt;- bike_orderlines_wrangled_tbl %&gt;%
-  
-  # Select columns and add a year
-  select(order_date, total_price, category_1) %&gt;%
-  mutate(year = year(order_date)) %&gt;%
-  
-  # Group by and summarize year and main catgegory
-  group_by(year, category_1) %&gt;%
-  summarise(sales = sum(total_price)) %&gt;%
-  ungroup() %&gt;%
-  
-  # Format $ Text
-  mutate(sales_text = scales::dollar(sales, big.mark = ".", 
-                                     decimal.mark = ",", 
-                                     prefix = "", 
-                                     suffix = " €"))
-
-sales_by_year_cat_1_tbl  
-
-# Step 2 - Visualize
-
-# Step 2 - Visualize
-sales_by_year_cat_1_tbl %&gt;%
-  
-  # Set up x, y, fill
-  ggplot(aes(x = year, y = sales, fill = category_1)) +
-  
-  # Geometries
-  geom_col() + # Run up to here to get a stacked bar plot
-  
-  # Facet
-  facet_wrap(~ category_1) +
-  
-  # Formatting
-  scale_y_continuous(labels = scales::dollar_format(big.mark = ".", 
-                                                    decimal.mark = ",", 
-                                                    prefix = "", 
-                                                    suffix = " €")) +
-  labs(
-    title = "Revenue by year and main category",
-    subtitle = "Each product category has an upward trend",
-    fill = "Main category" # Changes the legend name
-  )
-
-
-
-# 7.0 Writing Files ----
-
-# 7.1 Excel ----
-
-# 7.1 Excel ----
-#install.packages("writexl")
-library("writexl")
-bike_orderlines_wrangled_tbl %&gt;%
-  write_xlsx("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx")
-
-# 7.2 CSV ----
-bike_orderlines_wrangled_tbl %&gt;% 
-  write_csv("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.csv")
-
-# 7.3 RDS ----
-bike_orderlines_wrangled_tbl %&gt;% 
-  write_rds("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.rds")
-
-</a></code></pre>
-<section id="explanation-on-how-to-solve" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="explanation-on-how-to-solve">
-<span class="header-section-number">1.1</span> Explanation On how to solve:</h2>
+<section id="challenges" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Challenges:</h1>
+<ul>
+<li><p>Analyze the sales by location (state) with a bar plot. Since state and city are multiple features (variables), they should be split. Which state has the highes revenue? Replace your bike_orderlines_wrangled_tbl object with the newly wrangled object (with the columns state and city). Hint: Add + theme(axis.text.x = element_text(angle = 45, hjust = 1)) to your plotting code to rotate your x-axis labels. Probably you have to resize the viewer pane to show the entire plot.</p></li>
+<li><p>Analyze the sales by location and year (facet_wrap). Because there are 12 states with bike stores, you should get 12 plots.</p></li>
+</ul>
+<section id="solution" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="solution">
+<span class="header-section-number">1.1</span> Solution:</h2>
 <ul>
 <li><p>Load necessary libraries: This code block loads the required libraries, dplyr and ggplot2, which are used for data manipulation and plotting, respectively.</p></li>
 <li><p>Read in the data file: The code reads an Excel file named “bike_orderlines_new.xlsx” and assigns it to the variable bike_orderlines_wrangled_tbl_new. The data is stored as a tibble, a modern version of a data frame. Please take care of path to read the file.</p></li>
@@ -447,91 +237,77 @@ bike_orderlines_wrangled_tbl %&gt;%
 <li><p>Create a bar plot with facets: This code block creates a bar plot of the total revenue by “model_year” for each “state”. The facet_wrap() function is used to create a grid of plots, with each plot representing a different state. The scales = “free_x” argument allows each facet to have an independent x-axis scale. The ncol = 4 argument sets the number of columns in the grid to 4.</p></li>
 </ul>
 <p>The Complete solution to challenge:</p>
-<div class="cell" data-hash="01_tidyverse_cache/html/unnamed-chunk-1_682d4565dfa967cb28f6220c60a69425">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">##############################################################################################</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#Assignment task</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="do">##############################################################################################</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># Load necessary libraries</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb2-7"><a href="#cb2-7"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb2-9"><a href="#cb2-9"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.0
-#&gt; ✔ lubridate 1.9.2     ✔ tibble    3.2.1
-#&gt; ✔ purrr     1.0.1     ✔ tidyr     1.3.0
-#&gt; ✔ readr     2.1.4     
-#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-#&gt; ✖ dplyr::filter() masks stats::filter()
-#&gt; ✖ dplyr::lag()    masks stats::lag()
-#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Read in the data file</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>bike_orderlines_wrangled_tbl_new <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx"</span>)</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># Split the location data into separate columns for state and city</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>bike_orderlines_wrangled_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="fu">separate</span>(location, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"city"</span>, <span class="st">"state"</span>), <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-7"><a href="#cb4-7"></a></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co"># Group the data by state and calculate the total revenue</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a>sales_by_loc_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a><span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a><span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(total_price))</span>
-<span id="cb4-12"><a href="#cb4-12"></a></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># Create a bar plot of the total revenue by state#</span></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="fu">ggplot</span>(sales_by_loc_tbl_new, <span class="fu">aes</span>(<span class="at">x =</span> state, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb4-16"><a href="#cb4-16"></a><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Revenue by State"</span>, <span class="at">x =</span> <span class="st">"State"</span>, <span class="at">y =</span> <span class="st">"Total Revenue"</span>) <span class="sc">+</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="01_tidyverse_cache/html/plot_9251a5c2a6d419258b1ba39a93c71f48">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="do">##############################################################################################</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#Assignment task</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="do">##############################################################################################</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># Read in the data file</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>bike_orderlines_wrangled_tbl_new <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co"># Split the location data into separate columns for state and city</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>bike_orderlines_wrangled_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="fu">separate</span>(location, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"city"</span>, <span class="st">"state"</span>), <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co"># Group the data by state and calculate the total revenue</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>sales_by_loc_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(total_price))</span>
+<span id="cb1-22"><a href="#cb1-22"></a></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="co"># Create a bar plot of the total revenue by state#</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="fu">ggplot</span>(sales_by_loc_tbl_new, <span class="fu">aes</span>(<span class="at">x =</span> state, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Revenue by State"</span>, <span class="at">x =</span> <span class="st">"State"</span>, <span class="at">y =</span> <span class="st">"Total Revenue"</span>) <span class="sc">+</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="01_tidyverse_files/figure-html/unnamed-chunk-1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="01_tidyverse_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></a></p>
+<figure class="figure"><p><a href="01_tidyverse_files/figure-html/plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="01_tidyverse_files/figure-html/plot-1.png" class="img-fluid figure-img" width="960"></a></p>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Group the data by state and year and calculate the total revenue</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>sales_by_loc_year_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">group_by</span>(state, model_year) <span class="sc">%&gt;%</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(total_price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Group the data by state and year and calculate the total revenue</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>sales_by_loc_year_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">group_by</span>(state, model_year) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(total_price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>#&gt; `summarise()` has grouped output by 'state'. You can override using the
 #&gt; `.groups` argument.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Create a bar plot of the total revenue by state and year</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">ggplot</span>(sales_by_loc_year_tbl_new, <span class="fu">aes</span>(<span class="at">x =</span> model_year, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Revenue by State and Year"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Revenue"</span>) <span class="sc">+</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a><span class="fu">facet_wrap</span>(<span class="sc">~</span>state, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Create a bar plot of the total revenue by state and year</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">ggplot</span>(sales_by_loc_year_tbl_new, <span class="fu">aes</span>(<span class="at">x =</span> model_year, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Revenue by State and Year"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Revenue"</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="fu">facet_wrap</span>(<span class="sc">~</span>state, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="01_tidyverse_files/figure-html/unnamed-chunk-1-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="01_tidyverse_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></a></p>
+<figure class="figure"><p><a href="01_tidyverse_files/figure-html/plot-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="01_tidyverse_files/figure-html/plot-2.png" class="img-fluid figure-img" width="960"></a></p>
 </figure>
 </div>
 </div>
 </div>
-</section></section><section id="result-plots" class="level1" data-number="2"><h1 data-number="2">
-<span class="header-section-number">2</span> Result Plots:</h1>
+</section><section id="result-plots" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="result-plots">
+<span class="header-section-number">1.2</span> Result Plots:</h2>
+<p>These images are obtained while running the program on local computer.</p>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="../../plots/Task_1/Revenue by year.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Revenue by Year"><img src="../../plots/Task_1/Revenue by year.png" class="img-fluid figure-img"></a></p>
-<p></p><figcaption class="figure-caption">Revenue by Year</figcaption><p></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="../../plots/Task_1/Total_revenue_by_state.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Toal Revenue by State"><img src="../../plots/Task_1/Total_revenue_by_state.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="../../plots/Task_1/Total_revenue_by_state.png" class="lightbox" title="Toal Revenue by State" data-gallery="quarto-lightbox-gallery-3"><img src="../../plots/Task_1/Total_revenue_by_state.png" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">Toal Revenue by State</figcaption><p></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="../../plots/Task_1/total_revenue_by_state_and_year.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Toal Revenue by State and Year"><img src="../../plots/Task_1/total_revenue_by_state_and_year.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="../../plots/Task_1/total_revenue_by_state_and_year.png" class="lightbox" title="Toal Revenue by State and Year" data-gallery="quarto-lightbox-gallery-4"><img src="../../plots/Task_1/total_revenue_by_state_and_year.png" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">Toal Revenue by State and Year</figcaption><p></p>
 </figure>
 </div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -780,7 +556,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":true,"openEffect":"zoom","closeEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":true,"selector":".lightbox","descPosition":"bottom"});</script>
 
 
 </body></html>
