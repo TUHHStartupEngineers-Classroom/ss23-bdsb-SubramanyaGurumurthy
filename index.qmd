@@ -7,5 +7,5 @@ author: "Subramanya Nanjangud Gurumurthy"
 ![](assets/logo/TIE_logo.svg){width=80% fig-align="center"}
 
 
-Hi this is Subramanya Nanjangud Gurumurthy. I study M.Sc.Mechatronics in TU-Hamburg. My Matriculation Number is 54843. Currently I am pursuing my Master Thesis at [Neura Robotics GmbH](https://neura-robotics.com/de), Reiderich.
+Hi this is Subramanya Nanjangud Gurumurthy. I study M.Sc.Mechatronics in TU-Hamburg. My Matriculation Number is 54843. Currently I am about to begin my Master Thesis at [Neura Robotics GmbH](https://neura-robotics.com/de), Reiderich.
 I am part of the course Business Data Science Basics, as a part of business module.
