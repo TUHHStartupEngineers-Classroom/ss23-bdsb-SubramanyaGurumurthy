@@ -1,6 +1,6 @@
 ---
 title: "Tidyverse"
-author: "Joschka Schwarz"
+author: "Subramanya Nanjangud Gurumurthy"
 ---
 
 ::: callout-note
@@ -37,11 +37,11 @@ superscript^2^ / subscript~2~
 
 [Quarto](https://quarto.org)
 
-![Caption](../../assets/img/elephant.png)
+![Revenue by Year](../../plots/Task_1/Revenue by year.png)
 
-[![Caption](../../assets/img/elephant.png)](https://quarto.org)
+![Toal Revenue by State](../../plots/Task_1/Total_revenue_by_state.png)
 
-[![Caption](../../assets/img/elephant.png)](https://quarto.org "An elephant")
+![Toal Revenue by State and Year](../../plots/Task_1/total_revenue_by_state_and_year.png)
 
 
 # Lists
@@ -77,10 +77,47 @@ continues after
 
 # Source Code
 
-Use ``` to delimit blocks of source code:
+The code to solve the 1st challenge is:
 
 ```
-code
+##############################################################################################
+#Assignment task
+##############################################################################################
+
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+
+# Read in the data file
+bike_orderlines_wrangled_tbl_new <- read_excel("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx")
+
+# Split the location data into separate columns for state and city
+bike_orderlines_wrangled_tbl_new <- bike_orderlines_wrangled_tbl_new %>%
+separate(location, into = c("city", "state"), sep = ", ", remove = FALSE)
+
+# Group the data by state and calculate the total revenue
+sales_by_loc_tbl_new <- bike_orderlines_wrangled_tbl_new %>%
+group_by(state) %>%
+summarize(total_revenue = sum(total_price))
+
+# Create a bar plot of the total revenue by state#
+ggplot(sales_by_loc_tbl_new, aes(x = state, y = total_revenue)) +
+geom_bar(stat = "identity", fill = "steelblue") +
+labs(title = "Total Revenue by State", x = "State", y = "Total Revenue") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+# Group the data by state and year and calculate the total revenue
+sales_by_loc_year_tbl_new <- bike_orderlines_wrangled_tbl_new %>%
+group_by(state, model_year) %>%
+summarize(total_revenue = sum(total_price))
+
+# Create a bar plot of the total revenue by state and year
+ggplot(sales_by_loc_year_tbl_new, aes(x = model_year, y = total_revenue)) +
+geom_bar(stat = "identity", fill = "steelblue") +
+labs(title = "Total Revenue by State and Year", x = "Year", y = "Total Revenue") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+facet_wrap(~state, scales = "free_x", ncol = 4)
 ```
 
 Add a language to syntax highlight code blocks:

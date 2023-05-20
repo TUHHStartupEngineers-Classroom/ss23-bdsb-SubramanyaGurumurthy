@@ -81,7 +81,7 @@ patent_dt <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-S
 merged_dt <- merge(merge(asignee_dt, patent_asignee_dt, by.x = "id", by.y = "assignee_id"), patent_dt, by.x = "patent_id", by.y = "id")
 
 # Filter the merged data.table for patents granted in August 2014
-august_2014_patents <- merged_dt[year(date) == 2014 & month(date) == 8]
+august_2014_patents <- merged_dt[lubridate::year(date) == 2014 & lubridate::month(date) == 8]
 
 # Count the number of patents for each organization in August 2014
 patent_counts <- august_2014_patents[, .N, by = organization]
@@ -121,3 +121,4 @@ top_5_main_classes <- merged_dt[organization %in% top_10_company_ids, .N, by = m
 # Print the results
 most_innovative_tech_sector <- top_5_main_classes$mainclass_id
 print(most_innovative_tech_sector)
+
