@@ -3,10 +3,6 @@ title: "Data Acquisition"
 author: "Subramanya Nanjangud Gurumurthy"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
-
 # Data Acquisition:
 
 Data acquisition in R refers to the process of obtaining data from various sources and loading it into R for analysis and manipulation. 

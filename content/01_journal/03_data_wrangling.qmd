@@ -1,8 +1,146 @@
 ---
 title: "Data Wrangling"
-author: "Joschka Schwarz"
+author: "Subramanya Nanjangud Gurumurthy"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Data Wrangling
+
+Data wrangling in R refers to the process of transforming and manipulating data to make it more suitable for analysis or further processing. It involves tasks such as cleaning, reshaping, filtering, aggregating, and merging datasets.
+Data wrangling is an essential step in data analysis and is often performed using packages like dplyr and tidyr within the tidyverse ecosystem.
+
+Here are some key concepts and techniques commonly used in data wrangling in R:
+
+* Data Import: Reading data from various file formats such as CSV, Excel, or databases into R using functions like read_csv(), read_excel(), or read.table().
+
+* Data Cleaning: Handling missing values (na.omit(), complete.cases()), removing duplicates (distinct()), dealing with outliers, and correcting data inconsistencies.
+
+* Data Transformation: Modifying data structure and content using functions like mutate(), select(), filter(), and arrange() from the dplyr package. Renaming variables, creating new variables, or recoding values are common transformation tasks.
+
+* Reshaping Data: Converting data between wide and long formats using functions like pivot_longer() and pivot_wider() from the tidyr package. This is useful when dealing with data that needs to be organized differently for analysis or visualization.
+
+* Aggregating Data: Summarizing data by groups using functions like group_by() and summarize(). Calculating group-level statistics, such as means, counts, or proportions, is common in data analysis.
+
+* Merging and Joining Data: Combining multiple datasets based on common variables using functions like merge() or left_join(). This allows you to bring together different pieces of information from different sources.
+
+* Handling Dates and Times: Manipulating and extracting information from date and time variables using functions from packages like lubridate.
+
+* Data Type Conversion: Converting data types to the appropriate format, such as converting character variables to factors or numeric variables to dates.
+
+Overall, data wrangling in R involves a combination of functions and techniques to transform, clean, and reshape data in preparation for analysis. It requires a good understanding of the dataset and the available tools in R to 
+effectively manage and manipulate data.
+
+# Challenge: 
+
+Patents play a critical role in incentivizing innovation, without which we wouldn’t have much of the technology we rely on everyday. What does your iPhone, Google’s PageRank algorithm, and a butter substitute called Smart Balance 
+all have in common? 
+
+…They all probably wouldn’t be here if not for patents. A patent provides its owner with the ability to make money off of something that they invented, without having to worry about someone else copying their technology. 
+Think Apple would spend millions of dollars developing the iPhone if Samsung could just come along and rip it off? Probably not.
+
+Patents offer a great opportunity for data analysis, because the data is public. PatentsView is one of USPTO’s (United States Patent and Trademark Office) new initiatives intended to increase the usability and value of patent data.
+
+Please note, that the patent data provided by the USPTO is a very large data set that might overload your computer power. Therefore, we also provide a reduced data set that is filtered to the year 2014 only with less columns, 
+so you are able to complete the task, if your computer can’t process the large original data file.
+
+## Solution: 
+In this challenge I have used reduced dataset for the year 2014. 
+
+* Patent Dominance: What US company / corporation has the most patents? List the 10 US companies with the most assigned/granted patents.
+
+```{r}
+##############################################################################################
+#1st task
+##############################################################################################
+
+#using data.table
+library(data.table)
+
+# Step 1: Read the asignee.tsv file
+asignee_dt <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/Patent_data_reduced/assignee.tsv")
+
+# Step 2: Read the patent_asignee.tsv file
+patent_asignee_dt <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/Patent_data_reduced/patent_assignee.tsv")
+
+# Merge the data.tables based on assignee_id
+merged_dt <- merge(asignee_dt, patent_asignee_dt, by.x = "id", by.y = "assignee_id")
+
+# Count the number of patents for each organization
+patent_counts <- merged_dt[, .N, by = organization]
+
+# Sort the patent counts in descending order
+sorted_counts <- patent_counts[order(-N)]
+
+# Select the top 10 companies with the most patents
+top_10_companies <- sorted_counts[1:10]
+
+# Print the result
+print(top_10_companies)
+
+```
+
+
+* Recent patent activity: What US company had the most patents granted in August 2014? List the top 10 companies with the most new granted patents for August 2014.
+
+```{r}
+##############################################################################################
+# 2nd task:
+##############################################################################################
+
+library(data.table)
+
+# Read the files into data.tables
+asignee_dt <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/Patent_data_reduced/assignee.tsv")
+patent_asignee_dt <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/Patent_data_reduced/patent_assignee.tsv")
+patent_dt <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/Patent_data_reduced/patent.tsv")
+
+# Merge the data.tables based on assignee_id
+merged_dt <- merge(merge(asignee_dt, patent_asignee_dt, by.x = "id", by.y = "assignee_id"), patent_dt, by.x = "patent_id", by.y = "id")
+
+# Filter the merged data.table for patents granted in August 2014
+august_2014_patents <- merged_dt[lubridate::year(date) == 2014 & lubridate::month(date) == 8]
+
+# Count the number of patents for each organization in August 2014
+patent_counts <- august_2014_patents[, .N, by = organization]
+
+# Order the counts in descending order
+ordered_counts <- patent_counts[order(-N)]
+
+# Select the top 10 companies with the most new granted patents in August 2014
+top_10_companies_in_august <- ordered_counts[1:10]
+
+# Print the result
+print(top_10_companies_in_august)
+
+```
+
+* Innovation in Tech: What is the most innovative tech sector? For the top 10 companies (worldwide) with the most patents, what are the top 5 USPTO tech main classes?
+
+```{r}
+##############################################################################################
+#3rd task
+##############################################################################################
+
+library(data.table)
+
+# Read the files into data tables
+asignee <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/Patent_data_reduced/assignee.tsv")
+patent_asignee <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/Patent_data_reduced/patent_assignee.tsv")
+uspc <- fread("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/Patent_data_reduced/uspc.tsv")
+
+# Merge the data tables
+merged_dt <- merge(asignee, patent_asignee, by.x = "id", by.y = "assignee_id")
+merged_dt <- merge(merged_dt, uspc, by = "patent_id")
+
+# Count the number of patents per company
+patents_per_company <- merged_dt[, .(patent_count = .N), by = organization]
+top_10_companies <- patents_per_company[order(-patent_count)][1:10]
+
+# Get the top 5 USPTO tech main classes for the top 10 companies
+top_10_company_ids <- top_10_companies$organization
+top_5_main_classes <- merged_dt[organization %in% top_10_company_ids, .N, by = mainclass_id][order(-N)][1:5]
+
+# Print the results
+most_innovative_tech_sector <- top_5_main_classes$mainclass_id
+print(paste("Most innovative tech sectors are: ", most_innovative_tech_sector))
+
+```

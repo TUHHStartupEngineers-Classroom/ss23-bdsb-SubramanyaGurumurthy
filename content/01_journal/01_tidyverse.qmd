@@ -234,7 +234,7 @@ bike_orderlines_wrangled_tbl %>%
 
 The Complete solution to challenge:
 
-```
+```{r}
 ##############################################################################################
 #Assignment task
 ##############################################################################################
@@ -242,9 +242,11 @@ The Complete solution to challenge:
 # Load necessary libraries
 library(dplyr)
 library(ggplot2)
+library(readxl)
+library(tidyverse)
 
 # Read in the data file
-bike_orderlines_wrangled_tbl_new <- read_excel("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx")
+bike_orderlines_wrangled_tbl_new <- read_excel("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx")
 
 # Split the location data into separate columns for state and city
 bike_orderlines_wrangled_tbl_new <- bike_orderlines_wrangled_tbl_new %>%

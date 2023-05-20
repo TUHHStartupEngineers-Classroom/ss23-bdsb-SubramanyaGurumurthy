@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.2.335">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
 <meta name="author" content="Subramanya Nanjangud Gurumurthy">
-
 <title>MyLabJournal - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
@@ -21,8 +18,70 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
-
 
 <script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../../site_libs/quarto-nav/headroom.min.js"></script>
@@ -45,8 +104,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../site_libs/bootstrap/bootstrap-dark.min.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
-<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-<script id="quarto-search-options" type="application/json">{
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet"><script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
@@ -64,17 +122,13 @@ ul.task-list li input[type="checkbox"] {
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit"
   }
-}</script>
-
-
+}</script><link href="../../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+<script src="../../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 </head>
-
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
-      <div class="navbar-container container-fluid">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="navbar navbar-expand-lg navbar-dark "><div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a class="navbar-brand" href="../../index.html">
     <span class="navbar-title">MyLabJournal</span>
@@ -85,7 +139,7 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
+<li class="nav-item">
     <a class="nav-link" href="../../index.html">
  <span class="menu-text">Home</span></a>
   </li>  
@@ -93,8 +147,8 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link dropdown-toggle" href="#" id="nav-menu-journal" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">Journal</span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="nav-menu-journal">    
-        <li>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-journal">
+<li>
     <a class="dropdown-item" href="../../content/01_journal/01_tidyverse.html">
  <span class="dropdown-text">01 Tidyverse</span></a>
   </li>  
@@ -111,7 +165,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="dropdown-text">04 Data Visualization</span></a>
   </li>  
     </ul>
-  </li>
+</li>
   <li class="nav-item">
     <a class="nav-link" href="../../content/02_notes/05_class_notes.html">
  <span class="menu-text">Class notes</span></a>
@@ -121,36 +175,30 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Links</span></a>
   </li>  
 </ul>
-              <div class="quarto-toggle-container">
+<div class="quarto-toggle-container">
                   <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
               </div>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
-    </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+    </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-  <li><a href="#source-code" id="toc-source-code" class="nav-link active" data-scroll-target="#source-code"><span class="toc-section-number">1</span>  Source Code</a>
+<li>
+<a href="#source-code" id="toc-source-code" class="nav-link active" data-scroll-target="#source-code"><span class="toc-section-number">1</span>  Source Code</a>
   <ul class="collapse">
-  <li><a href="#explanation-on-how-to-solve" id="toc-explanation-on-how-to-solve" class="nav-link" data-scroll-target="#explanation-on-how-to-solve"><span class="toc-section-number">1.1</span>  Explanation On how to solve:</a></li>
-  </ul></li>
-  <li><a href="#result-plots" id="toc-result-plots" class="nav-link" data-scroll-target="#result-plots"><span class="toc-section-number">2</span>  Result Plots:</a></li>
+<li><a href="#explanation-on-how-to-solve" id="toc-explanation-on-how-to-solve" class="nav-link" data-scroll-target="#explanation-on-how-to-solve"><span class="toc-section-number">1.1</span>  Explanation On how to solve:</a></li>
   </ul>
-</nav>
+</li>
+  <li><a href="#result-plots" id="toc-result-plots" class="nav-link" data-scroll-target="#result-plots"><span class="toc-section-number">2</span>  Result Plots:</a></li>
+  </ul></nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
 <h1 class="title">Tidyverse</h1>
 </div>
 
@@ -170,11 +218,9 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
-</header>
-
-<p>Tidyverse is a collection of R packages designed to make data manipulation, visualization, and analysis easier and more consistent. It provides a set of tools and functions that follow a consistent grammar and syntax, making it easier to work with data in a tidy and organized manner.</p>
-<section id="source-code" class="level1" data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span> Source Code</h1>
+</header><p>Tidyverse is a collection of R packages designed to make data manipulation, visualization, and analysis easier and more consistent. It provides a set of tools and functions that follow a consistent grammar and syntax, making it easier to work with data in a tidy and organized manner.</p>
+<section id="source-code" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Source Code</h1>
 <p>The code from task explanation which is needed to solve the 1st challenge is:</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -189,7 +235,7 @@ Note
 <p>If you are running the code, please change the file paths according to your working environment as absolute paths have been used</p>
 </div>
 </div>
-<pre><code># Data Science at TUHH ------------------------------------------------------
+<pre><code><a href="https://tidyverse.tidyverse.org"># Data Science at TUHH ------------------------------------------------------
 # SALES ANALYSIS ----
 
 # 1.0 Load libraries ----
@@ -388,9 +434,9 @@ bike_orderlines_wrangled_tbl %&gt;%
 bike_orderlines_wrangled_tbl %&gt;% 
   write_rds("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.rds")
 
-</code></pre>
-<section id="explanation-on-how-to-solve" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="explanation-on-how-to-solve"><span class="header-section-number">1.1</span> Explanation On how to solve:</h2>
+</a></code></pre>
+<section id="explanation-on-how-to-solve" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="explanation-on-how-to-solve">
+<span class="header-section-number">1.1</span> Explanation On how to solve:</h2>
 <ul>
 <li><p>Load necessary libraries: This code block loads the required libraries, dplyr and ggplot2, which are used for data manipulation and plotting, respectively.</p></li>
 <li><p>Read in the data file: The code reads an Excel file named “bike_orderlines_new.xlsx” and assigns it to the variable bike_orderlines_wrangled_tbl_new. The data is stored as a tibble, a modern version of a data frame. Please take care of path to read the file.</p></li>
@@ -401,72 +447,91 @@ bike_orderlines_wrangled_tbl %&gt;%
 <li><p>Create a bar plot with facets: This code block creates a bar plot of the total revenue by “model_year” for each “state”. The facet_wrap() function is used to create a grid of plots, with each plot representing a different state. The scales = “free_x” argument allows each facet to have an independent x-axis scale. The ncol = 4 argument sets the number of columns in the grid to 4.</p></li>
 </ul>
 <p>The Complete solution to challenge:</p>
-<pre><code>##############################################################################################
-#Assignment task
-##############################################################################################
-
-# Load necessary libraries
-library(dplyr)
-library(ggplot2)
-
-# Read in the data file
-bike_orderlines_wrangled_tbl_new &lt;- read_excel("ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx")
-
-# Split the location data into separate columns for state and city
-bike_orderlines_wrangled_tbl_new &lt;- bike_orderlines_wrangled_tbl_new %&gt;%
-separate(location, into = c("city", "state"), sep = ", ", remove = FALSE)
-
-# Group the data by state and calculate the total revenue
-sales_by_loc_tbl_new &lt;- bike_orderlines_wrangled_tbl_new %&gt;%
-group_by(state) %&gt;%
-summarize(total_revenue = sum(total_price))
-
-# Create a bar plot of the total revenue by state#
-ggplot(sales_by_loc_tbl_new, aes(x = state, y = total_revenue)) +
-geom_bar(stat = "identity", fill = "steelblue") +
-labs(title = "Total Revenue by State", x = "State", y = "Total Revenue") +
-theme(axis.text.x = element_text(angle = 45, hjust = 1))
-
-
-# Group the data by state and year and calculate the total revenue
-sales_by_loc_year_tbl_new &lt;- bike_orderlines_wrangled_tbl_new %&gt;%
-group_by(state, model_year) %&gt;%
-summarize(total_revenue = sum(total_price))
-
-# Create a bar plot of the total revenue by state and year
-ggplot(sales_by_loc_year_tbl_new, aes(x = model_year, y = total_revenue)) +
-geom_bar(stat = "identity", fill = "steelblue") +
-labs(title = "Total Revenue by State and Year", x = "Year", y = "Total Revenue") +
-theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-facet_wrap(~state, scales = "free_x", ncol = 4)</code></pre>
-</section>
-</section>
-<section id="result-plots" class="level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span> Result Plots:</h1>
+<div class="cell" data-hash="01_tidyverse_cache/html/unnamed-chunk-1_682d4565dfa967cb28f6220c60a69425">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="do">##############################################################################################</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="co">#Assignment task</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="do">##############################################################################################</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb2-9"><a href="#cb2-9"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+#&gt; ✔ forcats   1.0.0     ✔ stringr   1.5.0
+#&gt; ✔ lubridate 1.9.2     ✔ tibble    3.2.1
+#&gt; ✔ purrr     1.0.1     ✔ tidyr     1.3.0
+#&gt; ✔ readr     2.1.4     
+#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#&gt; ✖ dplyr::filter() masks stats::filter()
+#&gt; ✖ dplyr::lag()    masks stats::lag()
+#&gt; ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Read in the data file</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>bike_orderlines_wrangled_tbl_new <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># Split the location data into separate columns for state and city</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>bike_orderlines_wrangled_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="fu">separate</span>(location, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"city"</span>, <span class="st">"state"</span>), <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a></span>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co"># Group the data by state and calculate the total revenue</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>sales_by_loc_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a><span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(total_price))</span>
+<span id="cb4-12"><a href="#cb4-12"></a></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># Create a bar plot of the total revenue by state#</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="fu">ggplot</span>(sales_by_loc_tbl_new, <span class="fu">aes</span>(<span class="at">x =</span> state, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Revenue by State"</span>, <span class="at">x =</span> <span class="st">"State"</span>, <span class="at">y =</span> <span class="st">"Total Revenue"</span>) <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../plots/Task_1/Revenue by year.png" class="lightbox" title="Revenue by Year" data-gallery="quarto-lightbox-gallery-1"><img src="../../plots/Task_1/Revenue by year.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="01_tidyverse_files/figure-html/unnamed-chunk-1-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="01_tidyverse_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Group the data by state and year and calculate the total revenue</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>sales_by_loc_year_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">group_by</span>(state, model_year) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(total_price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; `summarise()` has grouped output by 'state'. You can override using the
+#&gt; `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Create a bar plot of the total revenue by state and year</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">ggplot</span>(sales_by_loc_year_tbl_new, <span class="fu">aes</span>(<span class="at">x =</span> model_year, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Revenue by State and Year"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Revenue"</span>) <span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="fu">facet_wrap</span>(<span class="sc">~</span>state, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="01_tidyverse_files/figure-html/unnamed-chunk-1-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="01_tidyverse_files/figure-html/unnamed-chunk-1-2.png" class="img-fluid figure-img" width="672"></a></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="result-plots" class="level1" data-number="2"><h1 data-number="2">
+<span class="header-section-number">2</span> Result Plots:</h1>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="../../plots/Task_1/Revenue by year.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Revenue by Year"><img src="../../plots/Task_1/Revenue by year.png" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">Revenue by Year</figcaption><p></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../plots/Task_1/Total_revenue_by_state.png" class="lightbox" title="Toal Revenue by State" data-gallery="quarto-lightbox-gallery-2"><img src="../../plots/Task_1/Total_revenue_by_state.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="../../plots/Task_1/Total_revenue_by_state.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Toal Revenue by State"><img src="../../plots/Task_1/Total_revenue_by_state.png" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">Toal Revenue by State</figcaption><p></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="../../plots/Task_1/total_revenue_by_state_and_year.png" class="lightbox" title="Toal Revenue by State and Year" data-gallery="quarto-lightbox-gallery-3"><img src="../../plots/Task_1/total_revenue_by_state_and_year.png" class="img-fluid figure-img"></a></p>
+<figure class="figure"><p><a href="../../plots/Task_1/total_revenue_by_state_and_year.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Toal Revenue by State and Year"><img src="../../plots/Task_1/total_revenue_by_state_and_year.png" class="img-fluid figure-img"></a></p>
 <p></p><figcaption class="figure-caption">Toal Revenue by State and Year</figcaption><p></p>
 </figure>
 </div>
 
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -715,8 +780,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","selector":".lightbox","loop":true,"closeEffect":"zoom","descPosition":"bottom"});</script>
-
+<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":true,"openEffect":"zoom","closeEffect":"zoom"});</script>
 
 
 </body></html>
