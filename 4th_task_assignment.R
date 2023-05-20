@@ -61,10 +61,10 @@ data <- read_csv("https://covid.ourworldindata.org/data/owid-covid-data.csv")
 # Filter data for the selected countries in Europe and the United States
 countries <- c("Germany", "United Kingdom", "France", "Spain", "United States")
 filtered_data <- data %>%
-  filter(location %in% countries)
- 
+  dplyr::filter(location %in% countries)
+
 filetered_conti <- data %>%
-  filter(location %in% c("Europe"))
+  dplyr::filter(location %in% c("Europe"))
 
 # Convert date column to date format
 filtered_data$date <- ymd(filtered_data$date)
@@ -77,8 +77,9 @@ filtered_data <- filtered_data %>%
   ungroup()
 
 filetered_conti <- filetered_conti %>%
-  group_by(date, location) %>%
-  summarize(cumulative_cases = sum(total_cases, na.rm = TRUE)) %>%
+  group_by(date) %>%
+  summarize(cumulative_cases = sum(total_cases, na.rm = TRUE),
+            location = "Europe") %>%
   ungroup()
 
 filtered_data <- bind_rows(filtered_data, filetered_conti)
@@ -89,13 +90,13 @@ filtered_data$cumulative_cases <- filtered_data$cumulative_cases / 1e6
 
 # Filter data until May 2022
 filtered_data <- filtered_data %>%
-  filter(date <= ymd("2022-05-01"))
+  dplyr::filter(date <= ymd("2022-05-01"))
 
-# Find the highest values of cases for Asia, Europe, and Africa
+# Find the highest values of cases for Europe and the United States
 highest_cases <- filtered_data %>%
-  filter(location %in% c("Europe", "United States")) %>%
+  dplyr::filter(location %in% c("Europe", "United States")) %>%
   group_by(location) %>%
-  filter(cumulative_cases == max(cumulative_cases)) %>%
+  dplyr::filter(cumulative_cases == max(cumulative_cases)) %>%
   ungroup()
 
 # Plot the cumulative cases
@@ -109,9 +110,7 @@ ggplot(filtered_data, aes(x = date, y = cumulative_cases, color = location)) +
   scale_y_continuous(labels = function(x) paste0(x, "M")) +
   scale_color_manual(values = c("Germany" = "blue", "United Kingdom" = "red",
                                 "France" = "green", "Spain" = "orange",
-                                "United States" = "purple", "Europe" = "cyan"),
-                     ) +
-  # scale_shape_manual(values = c("Europe" = 17, "United States" = 15, "France" = 19)) +
+                                "United States" = "purple", "Europe" = "cyan")) +
   theme_dark() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
@@ -156,5 +155,8 @@ ggplot(world) +
   scale_fill_continuous(labels = percent_format(), name = "Mortality Rate")+
   labs(title="Confirmed Covid-19 deaths relative to the size of the Population",
        subtitle = "Around 6.2 Million confirmed COVID-19 deaths worldwide")
+
+
+
 
 
