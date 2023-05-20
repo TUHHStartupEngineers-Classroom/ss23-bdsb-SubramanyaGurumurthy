@@ -1,98 +1,84 @@
 ---
 title: "Tidyverse"
-author: "Joschka Schwarz"
+author: "Subramanya Nanjangud Gurumurthy"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+Tidyverse is a collection of R packages designed to make data manipulation, visualization, and analysis easier and more consistent. It provides a set of tools and functions that follow a consistent grammar and syntax, making it easier to work with data in a tidy and organized manner.
 
-This is a `.qmd` file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a \# in front of your text, it will create a top level-header.
+# Challenges:
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+* Analyze the sales by location (state) with a bar plot. Since state and city are multiple features (variables), they should be split. 
+Which state has the highes revenue? Replace your bike_orderlines_wrangled_tbl object with the newly wrangled object (with the columns state and city).
+Hint: Add + theme(axis.text.x = element_text(angle = 45, hjust = 1)) to your plotting code to rotate your x-axis labels. Probably you have to resize the viewer pane to show the entire plot. 
 
-# Text Formatting
+* Analyze the sales by location and year (facet_wrap). Because there are 12 states with bike stores, you should get 12 plots.
 
-*italics* and **bold**
+## Solution:
 
-superscript^2^ / subscript~2~
+* Load necessary libraries: This code block loads the required libraries, dplyr and ggplot2, which are used for data manipulation and plotting, respectively.
 
-~~strikethrough~~
+* Read in the data file: The code reads an Excel file named "bike_orderlines_new.xlsx" and assigns it to the variable bike_orderlines_wrangled_tbl_new. The data is stored as a tibble, a modern version of a data frame. Please take care of path to read the file.
 
-`verbatim code`
+* Split the location data: The separate() function is used to split the "location" column of the bike_orderlines_wrangled_tbl_new tibble into two separate columns, "city" and "state". The separator used is ", " (comma followed by a space). The original "location" column is retained in the tibble.
 
-> Blockquote
+* Group the data and calculate total revenue: The group_by() function groups the data in bike_orderlines_wrangled_tbl_new by "state". Then, the summarize() function calculates the total revenue by summing the "total_price" column. The results are stored in the sales_by_loc_tbl_new tibble.
 
-# Headings
+* Create a bar plot: The ggplot() function is used to initialize a new ggplot object, with sales_by_loc_tbl_new as the data. The aesthetic mappings are set with aes(x = state, y = total_revenue). The geom_bar() function is used to create a bar plot with "state" on the x-axis and "total_revenue" on the y-axis. Additional formatting and labeling options are set using labs() and theme() functions.
+ 
+* Group the data by state and year and calculate total revenue: Similar to step 4, this code block groups the data by both "state" and "model_year" columns and calculates the total revenue for each group. The results are stored in the sales_by_loc_year_tbl_new tibble.
 
-## Header 2
-### Header 3
-#### Header 4
-##### Header 5
-###### Header 6
+* Create a bar plot with facets: This code block creates a bar plot of the total revenue by "model_year" for each "state". The facet_wrap() function is used to create a grid of plots, with each plot representing a different state. The scales = "free_x" argument allows each facet to have an independent x-axis scale. The ncol = 4 argument sets the number of columns in the grid to 4.
 
-# Links & Images
+The Complete solution to challenge:
 
-<https://quarto.org>
+```{r plot, fig.width=10, fig.height=7}
+##############################################################################################
+#Assignment task
+##############################################################################################
 
-[Quarto](https://quarto.org)
+# Load necessary libraries
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(tidyverse)
 
-![Caption](../../assets/img/elephant.png)
+# Read in the data file
+bike_orderlines_wrangled_tbl_new <- read_excel("C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx")
 
-[![Caption](../../assets/img/elephant.png)](https://quarto.org)
+# Split the location data into separate columns for state and city
+bike_orderlines_wrangled_tbl_new <- bike_orderlines_wrangled_tbl_new %>%
+separate(location, into = c("city", "state"), sep = ", ", remove = FALSE)
 
-[![Caption](../../assets/img/elephant.png)](https://quarto.org "An elephant")
+# Group the data by state and calculate the total revenue
+sales_by_loc_tbl_new <- bike_orderlines_wrangled_tbl_new %>%
+group_by(state) %>%
+summarize(total_revenue = sum(total_price))
+
+# Create a bar plot of the total revenue by state#
+ggplot(sales_by_loc_tbl_new, aes(x = state, y = total_revenue)) +
+geom_bar(stat = "identity", fill = "steelblue") +
+labs(title = "Total Revenue by State", x = "State", y = "Total Revenue") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 
-# Lists
+# Group the data by state and year and calculate the total revenue
+sales_by_loc_year_tbl_new <- bike_orderlines_wrangled_tbl_new %>%
+group_by(state, model_year) %>%
+summarize(total_revenue = sum(total_price))
 
-* unordered list
-    + sub-item 1
-    + sub-item 2
-        - sub-sub-item 1
-        
-*   item 2
-
-    Continued (indent 4 spaces)
-    
-    
-1. ordered list
-2. item 2
-    i) sub-item 1
-         A.  sub-sub-item 1
-         
-(@)  A list whose numbering
-
-continues after
-
-(@)  an interruption
-
-# Tables
-
-| Right | Left | Default | Center |
-|------:|:-----|---------|:------:|
-|   12  |  12  |    12   |    12  |
-|  123  |  123 |   123   |   123  |
-|    1  |    1 |     1   |     1  |
-
-# Source Code
-
-Use ``` to delimit blocks of source code:
-
-```
-code
+# Create a bar plot of the total revenue by state and year
+ggplot(sales_by_loc_year_tbl_new, aes(x = model_year, y = total_revenue)) +
+geom_bar(stat = "identity", fill = "steelblue") +
+labs(title = "Total Revenue by State and Year", x = "Year", y = "Total Revenue") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+facet_wrap(~state, scales = "free_x", ncol = 4)
 ```
 
-Add a language to syntax highlight code blocks:
+## Result Plots: 
 
-```{r}
-1 + 1
-```
+These images are obtained while running the program on local computer.
 
-```{r}
-cars
-```
+![Toal Revenue by State](../../plots/Task_1/Total_revenue_by_state.png)
 
-```{r}
-plot(cars)
-```
+![Toal Revenue by State and Year](../../plots/Task_1/total_revenue_by_state_and_year.png)
+

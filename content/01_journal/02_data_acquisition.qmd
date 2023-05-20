@@ -1,8 +1,230 @@
 ---
 title: "Data Acquisition"
-author: "Joschka Schwarz"
+author: "Subramanya Nanjangud Gurumurthy"
 ---
 
-::: callout-note
-You can delete everything in here and start fresh.
-:::
+# Data Acquisition:
+
+Data acquisition in R refers to the process of obtaining data from various sources and loading it into R for analysis and manipulation. 
+R provides several functions and packages that facilitate data acquisition from different types of sources, such as files, databases, web APIs, and more. 
+Here is an introduction to some common methods of data acquisition in R:
+
+Reading from Files:
+
+* read.csv(): Reads data from a CSV (Comma-Separated Values) file.
+* read.table(): Reads data from a delimited text file.
+* read_excel(): Reads data from an Excel file.
+* readr package: Provides efficient functions for reading various file formats.
+
+Connecting to Databases:
+
+* DBI package: Provides a consistent interface for connecting to and querying databases.
+* dbConnect(): Establishes a connection to a database.
+* dbGetQuery(): Executes a SQL query and retrieves data from a database.
+
+Web Scraping:
+
+* rvest package: Allows scraping data from websites using CSS selectors or XPath expressions.
+* httr package: Provides functions for making HTTP requests and retrieving web content.
+
+Web APIs:
+
+* httr package: Supports interacting with web APIs using HTTP requests (GET, POST, etc.).
+* jsonlite package: Enables parsing and manipulating data in JSON format.
+
+Other Sources:
+
+* readr and haven packages: Support reading data from SAS, SPSS, and Stata files.
+* RODBC package: Connects to ODBC-compliant databases.
+
+These are just a few examples of data acquisition methods in R. Depending on your specific needs, there may be other packages and functions available to acquire data from specific sources or formats. 
+The choice of method depends on the type of data, its source, and the desired data format for further analysis in R.
+
+# Challenge 1:
+
+Get some data via an API. There are millions of providers, that offer API access for free and have good documentation about how to query their service. You just have to google them. You can use whatever service you want. 
+For example, you can get data about your listening history (spotify), get data about flights (skyscanner) or just check the weather forecast. Print the data in a readable format, e.g. a table if you want, you could also plot it.
+
+In this task I have used weather website [Open-Meteo](https://api.open-meteo.com/v1/) for solving the task. I have considered Temperature, Relative Humidity, Rain, Precipitation Probability as parameters for the location Hamburg.
+
+## Solution Explaination:
+
+* The code loads the necessary packages: httr for making HTTP requests and jsonlite for parsing JSON data.
+
+* The desired location, "Hamburg," is set.
+
+* The API request URL is constructed with the latitude, longitude, and the specific weather parameters to retrieve (temperature, relative humidity, precipitation probability, and rain).
+
+* The GET() function from httr sends the API request and retrieves the response.
+
+* The code checks if the request was successful by verifying the status code (200).
+
+* If the request was successful, the JSON response is parsed using fromJSON() from jsonlite. The flatten = TRUE argument ensures a flat structure for easier data extraction.
+
+* The relevant weather data (temperature, time, relative humidity, rain, and precipitation probability) is extracted from the parsed JSON.
+
+* The code then prints the location and the units of measurement for each weather parameter.
+
+* The extracted data is stored in a data frame (df).
+
+* Finally, the data frame is printed to display the weather data.
+
+The complete code: 
+
+```{r}
+##############################################################################################
+#1st task
+##############################################################################################
+
+library(httr)
+library(jsonlite)
+
+# Set the desired location
+location <- "Hamburg"
+
+#the API request URL
+url <- "https://api.open-meteo.com/v1/forecast?latitude=48.75&longitude=9.10&hourly=temperature_2m,relativehumidity_2m,precipitation_probability,rain"
+
+# Send the API request and retrieve the response
+response <- GET(url)
+
+
+# Check if the request was successful (status code 200)
+if (status_code(response) == 200) {
+  # Parse the JSON response
+  data <- fromJSON(content(response, "text"), flatten = TRUE)
+  
+  # Extract the relevant data
+  temperature <- data$hourly$temperature_2m
+  time <- data$hourly$time
+  relativehumidity <- data$hourly$relativehumidity_2m
+  rain <- data$hourly$rain
+  precip_probability <- data$hourly$precipitation_probability
+  
+  # Print the weather data
+  cat("Weather in", location, "\n")
+  cat("Units:\n")
+  cat("Temperature:","°C\n")
+  cat("Relative Humidity:","%\n")
+  cat("Precipitation:", "mm\n")
+  cat("Rain:","mm\n")
+  
+  df <- data.frame("Date_T_Time" = time, "Temperature" = temperature, "Relative_Humidity" = relativehumidity,
+                   "Rain" = rain, "Precipitation_Probability" = precip_probability)
+  
+  print(head(df, 25))	
+  plot(df)
+  
+} else {
+  cat("Error:", status_code(response), "\n")
+}
+
+```
+
+## Result plot for the challenge:
+
+Even though the program can print a lot of data, for sample I am plotting 15 values from the table for reference in case if online running do not work.
+
+| Date and Time         | Temperature   | Relative Humidity | Rain | Precipitation Probability  |
+|:---------------------:|:-------------:|:-----------------:|:----:|:--------------------------:|
+|   2023-05-20T00:00    |    10.3       |         79        |  0   |             0		|
+|   2023-05-20T01:00    |    10.5       |         82        |  0   |             0		|
+|   2023-05-20T02:00    |     9.8       |         87        |  0   |             0		|
+|   2023-05-20T03:00    |     9.7       |         87        |  0   |             0		|
+|   2023-05-20T04:00    |     9.6       |         89        |  0   |             0		|
+|   2023-05-20T05:00    |    10.3       |         87        |  0   |             0		|
+|   2023-05-20T06:00    |    11.2       |         85        |  0   |             0		|
+|   2023-05-20T07:00    |    12.8       |         80        |  0   |             0		|
+|   2023-05-20T08:00    |    14.3       |         72        |  0   |             0		|		
+|   2023-05-20T09:00    |    15.4       |         68        |  0   |             0		|
+|   2023-05-20T10:00    |    16.6       |         64        |  0   |             2		|
+|   2023-05-20T11:00    |    18.5       |         56        |  0   |             4		|
+|   2023-05-20T12:00    |    19.7       |         50        |  0   |             6		|
+|   2023-05-20T13:00    |    20.6       |         47        |  0   |             4		|
+|   2023-05-20T14:00    |    20.0       |         50        |  0   |             2		|
+
+
+# Challenge 2:
+
+Scrape one of the competitor websites of canyon (either https://www.rosebikes.de/ or https://www.radon-bikes.de) and create a small database. The database should contain the model names and prices for at least one category. 
+Use the selectorgadget to get a good understanding of the website structure, it is really helpful. After scraping your data, convert it to a readable format. Prices should be in a numeric format without any other letters or symbols. 
+Also check if the prices are reasonable.
+
+## Steps involved in Solution:
+
+* Load the necessary libraries: rvest and dplyr.
+* Define the URL of the competitor website.
+* Read the HTML content of the website using read_html().
+* Scrape the model names by selecting the appropriate HTML elements using CSS selectors (html_nodes()), extracting the text (html_text()), and trimming white spaces (trimws()).
+* Scrape the prices by following a similar process as step 4, but also perform additional data cleaning steps such as removing non-numeric characters, replacing commas with dots, and converting the values to numeric.
+* Define a reasonable price range (maximum price).
+* Filter out rows with prices exceeding the reasonable price range.
+* Create a new variable indicating whether the price is reasonable or not.
+* Iterate over the prices and reasonability using a loop, printing the price and its reasonability.
+* Create a data frame (data) with the scraped model names, prices, and reasonability.
+* Generate a bar plot of the prices by model and reasonability, where reasonable prices are shown in green and unreasonable prices are shown in red.
+* Print the first 10 rows of the data frame.
+
+
+The complete code: 
+
+```{r}
+##############################################################################################
+#2nd task
+##############################################################################################
+library(rvest)
+library(dplyr)
+
+# Define the URL of the competitor website
+url <- "https://www.radon-bikes.de/en/mountainbike/hardtail/bikegrid/"
+
+# Read the HTML content of the website
+html <- read_html(url)
+
+# Scrape the model names and prices
+model_names <- html %>%
+  html_nodes(".m-bikegrid__info .a-heading--small") %>%
+  html_text()%>%
+  trimws()
+
+prices <- html %>%
+  html_nodes(".m-bikegrid__price--active") %>%
+  html_text() %>%
+  trimws() %>%
+  gsub("[^0-9.,]", "", .) %>%
+  gsub(",", ".", .) %>%
+  as.numeric()
+  
+prices <- na.omit(prices)
+
+# Define the reasonable price range
+max_price <- 2000  # Maximum reasonable price
+
+# Filter out rows with unreasonable prices
+reasonable_prices <- prices <= max_price
+
+reasonable_list <- ifelse(reasonable_prices, "Reasonable", "Not Reasonable")
+
+# uncomment this block if you want to print the reasonability individually
+#for (i in seq_along(prices)) {
+#  price <- prices[i]
+#  reasonable <- ifelse(reasonable_prices[i], "Reasonable", "Not Reasonable")
+#  print(paste("Price:", price, "| Reasonable:", reasonable))
+#}
+
+# # Create a data frame with the scraped data
+data <- data.frame(Model = model_names, Price = prices, Reasonability = reasonable_list)
+
+barplot(as.numeric(data$Price), names.arg = data$Model, col = ifelse(data$Reasonability == "Reasonable", "green", "red"),
+        xlab = "Model", ylab = "Price", main = "Price by Model and Reasonability")
+
+# Print the first 10 rows of the data frame
+print(head(data, n = 10))
+
+```
+
+## Result Plot: 
+
+The result that was obtained from the local machine. The color of the reasonability has been changed from green, red to blue and yellow for the diffrerentiation:
+
+![Price by Model and Reasonability](../../plots/Task_2/Price_by_model_and_Reasonability.png)

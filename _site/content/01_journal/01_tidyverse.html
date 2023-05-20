@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.335">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<meta name="author" content="Joschka Schwarz">
+<meta name="author" content="Subramanya Nanjangud Gurumurthy">
 <title>MyLabJournal - Tidyverse</title>
 <style>
 code{white-space: pre-wrap;}
@@ -188,17 +188,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Contents</h2>
    
   <ul class="collapse">
-<li><a href="#text-formatting" id="toc-text-formatting" class="nav-link active" data-scroll-target="#text-formatting"><span class="toc-section-number">1</span>  Text Formatting</a></li>
-  <li>
-<a href="#headings" id="toc-headings" class="nav-link" data-scroll-target="#headings"><span class="toc-section-number">2</span>  Headings</a>
+<li>
+<a href="#challenges" id="toc-challenges" class="nav-link active" data-scroll-target="#challenges"><span class="toc-section-number">1</span>  Challenges:</a>
   <ul class="collapse">
-<li><a href="#header-2" id="toc-header-2" class="nav-link" data-scroll-target="#header-2"><span class="toc-section-number">2.1</span>  Header 2</a></li>
+<li><a href="#solution" id="toc-solution" class="nav-link" data-scroll-target="#solution"><span class="toc-section-number">1.1</span>  Solution:</a></li>
+  <li><a href="#result-plots" id="toc-result-plots" class="nav-link" data-scroll-target="#result-plots"><span class="toc-section-number">1.2</span>  Result Plots:</a></li>
   </ul>
 </li>
-  <li><a href="#links-images" id="toc-links-images" class="nav-link" data-scroll-target="#links-images"><span class="toc-section-number">3</span>  Links &amp; Images</a></li>
-  <li><a href="#lists" id="toc-lists" class="nav-link" data-scroll-target="#lists"><span class="toc-section-number">4</span>  Lists</a></li>
-  <li><a href="#tables" id="toc-tables" class="nav-link" data-scroll-target="#tables"><span class="toc-section-number">5</span>  Tables</a></li>
-  <li><a href="#source-code" id="toc-source-code" class="nav-link" data-scroll-target="#source-code"><span class="toc-section-number">6</span>  Source Code</a></li>
   </ul></nav>
     </div>
 <!-- main -->
@@ -213,7 +209,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>Joschka Schwarz </p>
+             <p>Subramanya Nanjangud Gurumurthy </p>
           </div>
   </div>
     
@@ -222,157 +218,96 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
-</header><div class="callout-note callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>You can delete everything in here and start fresh.</p>
-</div>
-</div>
-<p>This is a <code>.qmd</code> file. It is plain text with special features. Any time you write just like this, it will be compiled to normal text in the website. If you put a # in front of your text, it will create a top level-header.</p>
-<p>To learn more about Quarto websites visit <a href="https://quarto.org/docs/websites" class="uri">https://quarto.org/docs/websites</a>.</p>
-<section id="text-formatting" class="level1" data-number="1"><h1 data-number="1">
-<span class="header-section-number">1</span> Text Formatting</h1>
-<p><em>italics</em> and <strong>bold</strong></p>
-<p>superscript<sup>2</sup> / subscript<sub>2</sub></p>
-<p><del>strikethrough</del></p>
-<p><code>verbatim code</code></p>
-<blockquote class="blockquote">
-<p>Blockquote</p>
-</blockquote>
-</section><section id="headings" class="level1" data-number="2"><h1 data-number="2">
-<span class="header-section-number">2</span> Headings</h1>
-<section id="header-2" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="header-2">
-<span class="header-section-number">2.1</span> Header 2</h2>
-<section id="header-3" class="level3"><h3 class="anchored" data-anchor-id="header-3">Header 3</h3>
-<section id="header-4" class="level4"><h4 class="anchored" data-anchor-id="header-4">Header 4</h4>
-<section id="header-5" class="level5"><h5 class="anchored" data-anchor-id="header-5">Header 5</h5>
-<section id="header-6" class="level6"><h6 class="anchored" data-anchor-id="header-6">Header 6</h6>
-</section></section></section></section></section></section><section id="links-images" class="level1" data-number="3"><h1 data-number="3">
-<span class="header-section-number">3</span> Links &amp; Images</h1>
-<p><a href="https://quarto.org" class="uri">https://quarto.org</a></p>
-<p><a href="https://quarto.org">Quarto</a></p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="../../assets/img/elephant.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Caption"><img src="../../assets/img/elephant.png" class="img-fluid figure-img"></a></p>
-<p></p><figcaption class="figure-caption">Caption</figcaption><p></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="https://quarto.org"><img src="../../assets/img/elephant.png" class="img-fluid figure-img"></a></p>
-<p></p><figcaption class="figure-caption">Caption</figcaption><p></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="https://quarto.org" title="An elephant"><img src="../../assets/img/elephant.png" class="img-fluid figure-img"></a></p>
-<p></p><figcaption class="figure-caption">Caption</figcaption><p></p>
-</figure>
-</div>
-</section><section id="lists" class="level1" data-number="4"><h1 data-number="4">
-<span class="header-section-number">4</span> Lists</h1>
+</header><p>Tidyverse is a collection of R packages designed to make data manipulation, visualization, and analysis easier and more consistent. It provides a set of tools and functions that follow a consistent grammar and syntax, making it easier to work with data in a tidy and organized manner.</p>
+<section id="challenges" class="level1" data-number="1"><h1 data-number="1">
+<span class="header-section-number">1</span> Challenges:</h1>
 <ul>
-<li>
-<p>unordered list</p>
+<li><p>Analyze the sales by location (state) with a bar plot. Since state and city are multiple features (variables), they should be split. Which state has the highes revenue? Replace your bike_orderlines_wrangled_tbl object with the newly wrangled object (with the columns state and city). Hint: Add + theme(axis.text.x = element_text(angle = 45, hjust = 1)) to your plotting code to rotate your x-axis labels. Probably you have to resize the viewer pane to show the entire plot.</p></li>
+<li><p>Analyze the sales by location and year (facet_wrap). Because there are 12 states with bike stores, you should get 12 plots.</p></li>
+</ul>
+<section id="solution" class="level2" data-number="1.1"><h2 data-number="1.1" class="anchored" data-anchor-id="solution">
+<span class="header-section-number">1.1</span> Solution:</h2>
 <ul>
-<li>sub-item 1</li>
-<li>sub-item 2
-<ul>
-<li>sub-sub-item 1</li>
+<li><p>Load necessary libraries: This code block loads the required libraries, dplyr and ggplot2, which are used for data manipulation and plotting, respectively.</p></li>
+<li><p>Read in the data file: The code reads an Excel file named “bike_orderlines_new.xlsx” and assigns it to the variable bike_orderlines_wrangled_tbl_new. The data is stored as a tibble, a modern version of a data frame. Please take care of path to read the file.</p></li>
+<li><p>Split the location data: The separate() function is used to split the “location” column of the bike_orderlines_wrangled_tbl_new tibble into two separate columns, “city” and “state”. The separator used is “,” (comma followed by a space). The original “location” column is retained in the tibble.</p></li>
+<li><p>Group the data and calculate total revenue: The group_by() function groups the data in bike_orderlines_wrangled_tbl_new by “state”. Then, the summarize() function calculates the total revenue by summing the “total_price” column. The results are stored in the sales_by_loc_tbl_new tibble.</p></li>
+<li><p>Create a bar plot: The ggplot() function is used to initialize a new ggplot object, with sales_by_loc_tbl_new as the data. The aesthetic mappings are set with aes(x = state, y = total_revenue). The geom_bar() function is used to create a bar plot with “state” on the x-axis and “total_revenue” on the y-axis. Additional formatting and labeling options are set using labs() and theme() functions.</p></li>
+<li><p>Group the data by state and year and calculate total revenue: Similar to step 4, this code block groups the data by both “state” and “model_year” columns and calculates the total revenue for each group. The results are stored in the sales_by_loc_year_tbl_new tibble.</p></li>
+<li><p>Create a bar plot with facets: This code block creates a bar plot of the total revenue by “model_year” for each “state”. The facet_wrap() function is used to create a grid of plots, with each plot representing a different state. The scales = “free_x” argument allows each facet to have an independent x-axis scale. The ncol = 4 argument sets the number of columns in the grid to 4.</p></li>
 </ul>
-</li>
-</ul>
-</li>
-<li>
-<p>item 2</p>
-<p>Continued (indent 4 spaces)</p>
-</li>
-</ul>
-<ol type="1">
-<li>ordered list</li>
-<li>item 2
-<ol type="i">
-<li>sub-item 1
-<ol type="A">
-<li>sub-sub-item 1</li>
-</ol>
-</li>
-</ol>
-</li>
-</ol>
-<ol class="example" type="1">
-<li>A list whose numbering</li>
-</ol>
-<p>continues after</p>
-<ol start="2" class="example" type="1">
-<li>an interruption</li>
-</ol></section><section id="tables" class="level1" data-number="5"><h1 data-number="5">
-<span class="header-section-number">5</span> Tables</h1>
-<table class="table">
-<thead><tr class="header">
-<th style="text-align: right;">Right</th>
-<th style="text-align: left;">Left</th>
-<th>Default</th>
-<th style="text-align: center;">Center</th>
-</tr></thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: right;">12</td>
-<td style="text-align: left;">12</td>
-<td>12</td>
-<td style="text-align: center;">12</td>
-</tr>
-<tr class="even">
-<td style="text-align: right;">123</td>
-<td style="text-align: left;">123</td>
-<td>123</td>
-<td style="text-align: center;">123</td>
-</tr>
-<tr class="odd">
-<td style="text-align: right;">1</td>
-<td style="text-align: left;">1</td>
-<td>1</td>
-<td style="text-align: center;">1</td>
-</tr>
-</tbody>
-</table></section><section id="source-code" class="level1" data-number="6"><h1 data-number="6">
-<span class="header-section-number">6</span> Source Code</h1>
-<p>Use ``` to delimit blocks of source code:</p>
-<pre><code>code</code></pre>
-<p>Add a language to syntax highlight code blocks:</p>
-<div class="cell" data-hash="01_tidyverse_cache/html/unnamed-chunk-1_78745102f85d5cf89cad6fe4a83ca938">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 2</code></pre>
-</div>
-</div>
-<div class="cell" data-hash="01_tidyverse_cache/html/unnamed-chunk-2_f6e8e1bca112a7054679dca3031b6157">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>cars</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-
-<div data-pagedtable="false">
-  <script data-pagedtable-source="" type="application/json">
-{"columns":[{"label":["speed"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["dist"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"4","2":"2"},{"1":"4","2":"10"},{"1":"7","2":"4"},{"1":"7","2":"22"},{"1":"8","2":"16"},{"1":"9","2":"10"},{"1":"10","2":"18"},{"1":"10","2":"26"},{"1":"10","2":"34"},{"1":"11","2":"17"},{"1":"11","2":"28"},{"1":"12","2":"14"},{"1":"12","2":"20"},{"1":"12","2":"24"},{"1":"12","2":"28"},{"1":"13","2":"26"},{"1":"13","2":"34"},{"1":"13","2":"34"},{"1":"13","2":"46"},{"1":"14","2":"26"},{"1":"14","2":"36"},{"1":"14","2":"60"},{"1":"14","2":"80"},{"1":"15","2":"20"},{"1":"15","2":"26"},{"1":"15","2":"54"},{"1":"16","2":"32"},{"1":"16","2":"40"},{"1":"17","2":"32"},{"1":"17","2":"40"},{"1":"17","2":"50"},{"1":"18","2":"42"},{"1":"18","2":"56"},{"1":"18","2":"76"},{"1":"18","2":"84"},{"1":"19","2":"36"},{"1":"19","2":"46"},{"1":"19","2":"68"},{"1":"20","2":"32"},{"1":"20","2":"48"},{"1":"20","2":"52"},{"1":"20","2":"56"},{"1":"20","2":"64"},{"1":"22","2":"66"},{"1":"23","2":"54"},{"1":"24","2":"70"},{"1":"24","2":"92"},{"1":"24","2":"93"},{"1":"24","2":"120"},{"1":"25","2":"85"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
-  </script>
-</div>
-</div>
-</div>
-<div class="cell" data-hash="01_tidyverse_cache/html/unnamed-chunk-3_c54f7526e0f7f04368360fa7b6e5663a">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">plot</span>(cars)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The Complete solution to challenge:</p>
+<div class="cell" data-hash="01_tidyverse_cache/html/plot_9251a5c2a6d419258b1ba39a93c71f48">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="do">##############################################################################################</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#Assignment task</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="do">##############################################################################################</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co"># Load necessary libraries</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-9"><a href="#cb1-9"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-10"><a href="#cb1-10"></a></span>
+<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># Read in the data file</span></span>
+<span id="cb1-12"><a href="#cb1-12"></a>bike_orderlines_wrangled_tbl_new <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"C:/Users/LENOVO/OneDrive/Desktop/business_module/ss23-bdsb-SubramanyaGurumurthy/ds_data/01_bike_sales/02_wrangled_data/bike_orderlines_new.xlsx"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13"></a></span>
+<span id="cb1-14"><a href="#cb1-14"></a><span class="co"># Split the location data into separate columns for state and city</span></span>
+<span id="cb1-15"><a href="#cb1-15"></a>bike_orderlines_wrangled_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb1-16"><a href="#cb1-16"></a><span class="fu">separate</span>(location, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"city"</span>, <span class="st">"state"</span>), <span class="at">sep =</span> <span class="st">", "</span>, <span class="at">remove =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-17"><a href="#cb1-17"></a></span>
+<span id="cb1-18"><a href="#cb1-18"></a><span class="co"># Group the data by state and calculate the total revenue</span></span>
+<span id="cb1-19"><a href="#cb1-19"></a>sales_by_loc_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb1-20"><a href="#cb1-20"></a><span class="fu">group_by</span>(state) <span class="sc">%&gt;%</span></span>
+<span id="cb1-21"><a href="#cb1-21"></a><span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(total_price))</span>
+<span id="cb1-22"><a href="#cb1-22"></a></span>
+<span id="cb1-23"><a href="#cb1-23"></a><span class="co"># Create a bar plot of the total revenue by state#</span></span>
+<span id="cb1-24"><a href="#cb1-24"></a><span class="fu">ggplot</span>(sales_by_loc_tbl_new, <span class="fu">aes</span>(<span class="at">x =</span> state, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb1-25"><a href="#cb1-25"></a><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb1-26"><a href="#cb1-26"></a><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Revenue by State"</span>, <span class="at">x =</span> <span class="st">"State"</span>, <span class="at">y =</span> <span class="st">"Total Revenue"</span>) <span class="sc">+</span></span>
+<span id="cb1-27"><a href="#cb1-27"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><a href="01_tidyverse_files/figure-html/unnamed-chunk-3-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="01_tidyverse_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></a></p>
+<figure class="figure"><p><a href="01_tidyverse_files/figure-html/plot-1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="01_tidyverse_files/figure-html/plot-1.png" class="img-fluid figure-img" width="960"></a></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Group the data by state and year and calculate the total revenue</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>sales_by_loc_year_tbl_new <span class="ot">&lt;-</span> bike_orderlines_wrangled_tbl_new <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="fu">group_by</span>(state, model_year) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="fu">summarize</span>(<span class="at">total_revenue =</span> <span class="fu">sum</span>(total_price))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>#&gt; `summarise()` has grouped output by 'state'. You can override using the
+#&gt; `.groups` argument.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Create a bar plot of the total revenue by state and year</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">ggplot</span>(sales_by_loc_year_tbl_new, <span class="fu">aes</span>(<span class="at">x =</span> model_year, <span class="at">y =</span> total_revenue)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Revenue by State and Year"</span>, <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Total Revenue"</span>) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="fu">facet_wrap</span>(<span class="sc">~</span>state, <span class="at">scales =</span> <span class="st">"free_x"</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="01_tidyverse_files/figure-html/plot-2.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="01_tidyverse_files/figure-html/plot-2.png" class="img-fluid figure-img" width="960"></a></p>
 </figure>
 </div>
 </div>
 </div>
+</section><section id="result-plots" class="level2" data-number="1.2"><h2 data-number="1.2" class="anchored" data-anchor-id="result-plots">
+<span class="header-section-number">1.2</span> Result Plots:</h2>
+<p>These images are obtained while running the program on local computer.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="../../plots/Task_1/Total_revenue_by_state.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Toal Revenue by State"><img src="../../plots/Task_1/Total_revenue_by_state.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">Toal Revenue by State</figcaption><p></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><a href="../../plots/Task_1/total_revenue_by_state_and_year.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Toal Revenue by State and Year"><img src="../../plots/Task_1/total_revenue_by_state_and_year.png" class="img-fluid figure-img"></a></p>
+<p></p><figcaption class="figure-caption">Toal Revenue by State and Year</figcaption><p></p>
+</figure>
+</div>
 
 
-</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -621,7 +556,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","selector":".lightbox","loop":true,"closeEffect":"zoom","openEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","closeEffect":"zoom","loop":true,"descPosition":"bottom","selector":".lightbox"});</script>
 
 
 </body></html>
